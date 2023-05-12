@@ -1,0 +1,82 @@
+/* Master */
+.App {
+  margin-right: 24px;
+  min-height: 100vh;
+}
+
+/* === */
+/* Left */
+
+.nav {
+  position: sticky;
+  top: 0;
+  padding: 24px;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* === */
+/* Mid - Main */
+
+.main {
+  padding-top: 24px;
+  position: relative;
+}
+
+.header {
+  position: relative;
+  text-align: left;
+  z-index: 100;
+  margin-bottom: -24px;
+}
+
+/* Make the tabs sticky when scrolled */
+.ant-tabs-nav {
+  position: sticky !important;
+  top: 0px;
+  padding-top: 24px;
+
+  background-color: white;
+  z-index: 1;
+}
+
+/* === */
+/* Right - Chat */
+
+.chat-container {
+  position: sticky;
+  top: 0;
+  padding: 24px 0;
+  height: 100vh;
+  background-color: white;
+}
+
+.chat {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-height-control {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  overflow: scroll;
+  padding: 0 4px;
+  padding-bottom: 120px;
+}
+
+.chat-footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  padding: 24px 12px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+}
+.chat-input {
+  /* width: 100%; */
+}
