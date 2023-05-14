@@ -21,8 +21,10 @@ function CardWhenWhere({ tripProfile }) {
     endTime = dayjs.unix(tripProfile.trip_end_time);
   }
 
-  const origin = tripProfile?.origin.name;
-  const destination = tripProfile?.destination.name;
+  //TODO: need some support from the backend, this is breaking a lot of things since some fields are missing
+  // TODO: fields needs to be consistent
+  const origin = tripProfile?.origin?.name;
+  const destination = tripProfile?.destination?.name;
 
   return (
     <Card type='inner' title='Where and when' bordered={false}>
