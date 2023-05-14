@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
-import { Card, Input, Divider, Space } from 'antd';
+import { Card, Input, Space } from 'antd';
+import ChatDialogue from './ChatDialogue';
 
 const { TextArea } = Input;
 
@@ -21,20 +22,36 @@ function Chat({ chatLog, onSendChatMsg }) {
     await onSendChatMsg(inputContent);
   }
 
+  //TODO: fix scroll
+  // const messagesEndRef = useRef(null);
+
+  // const scrollToBottom = () => {
+  //   messagesEndRef.current?.scrollIntoView({
+  //     behavior: 'smooth',
+  //     block: 'nearest',
+  //     inline: 'start',
+  //   });
+  // };
+  // useEffect(() => {
+  //   scrollToBottom();
+  // }, [chatLog]);
+
   return (
     <div className='chat-container'>
       <Card title='Chat' extra={<a>Export</a>} className='chat'>
         <div className='chat-height-control'>
           {chatLog.map((chatLog, idx) => {
             return (
-              <div key={idx}>
-                <p>{chatLog.role}:</p>
-                <p>{chatLog.content}</p>
-                <Divider />
-              </div>
+              <ChatDialogue
+                key={idx}
+                role={chatLog.role}
+                content={chatLog.content}
+              />
             );
           })}
+          {/* <div ref={messagesEndRef} /> */}
         </div>
+
         <footer className='chat-footer'>
           <Space.Compact
             style={{
