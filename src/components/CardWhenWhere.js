@@ -27,7 +27,7 @@ function CardWhenWhere({ tripProfile }) {
   const destination = tripProfile?.destination?.name;
 
   return (
-    <Card type='inner' title='Where and when' bordered={false}>
+    <Card title='Where and when'>
       <Form
         form={form}
         layout='vertical'

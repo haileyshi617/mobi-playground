@@ -14,7 +14,7 @@ function CardWho({ tripProfile }) {
   let childrenCnt = tripProfile?.traveler_information.children;
 
   return (
-    <Card type='inner' title='Who' bordered={false}>
+    <Card title='Who'>
       <Form
         form={form}
         layout='vertical'

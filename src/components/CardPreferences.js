@@ -72,7 +72,7 @@ function CardPreferences({ tripProfile }) {
   ];
 
   return (
-    <Card type='inner' title='Preferences' bordered={false}>
+    <Card title='Preferences'>
       <Table
         columns={columns}
         dataSource={data}
