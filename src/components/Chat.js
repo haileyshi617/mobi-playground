@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 
-import { Card, Input, Space } from 'antd';
+import { Card, Input, Space, Button, Tooltip } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
+
 import ChatDialogue from './ChatDialogue';
 
 const { TextArea } = Input;
@@ -36,9 +38,30 @@ function Chat({ chatLog, onSendChatMsg }) {
   //   scrollToBottom();
   // }, [chatLog]);
 
+  const exportData = () => {
+    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+      JSON.stringify(chatLog)
+    )}`;
+    const link = document.createElement('a');
+    link.href = jsonString;
+    link.download = 'chatLog.json';
+
+    link.click();
+  };
+
   return (
     <div className='chat-container'>
-      <Card title='Chat' extra={<a>Export</a>} className='chat'>
+      <Card
+        title='Chat'
+        extra={
+          <Tooltip title='Save chat history into a JSON'>
+            <Button onClick={exportData} icon={<DownloadOutlined />}>
+              Export
+            </Button>
+          </Tooltip>
+        }
+        className='chat'
+      >
         <div className='chat-height-control'>
           {chatLog.map((chatLog, idx) => {
             return (

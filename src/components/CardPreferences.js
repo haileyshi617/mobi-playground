@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 import { Card, Table, Tag } from 'antd';
 import { excludeTags } from '../utils/ChatUtils';
 
@@ -8,6 +10,15 @@ function CardPreferences({ tripProfile }) {
   const excluded = tripProfile?.excluded_filters
     ? excludeTags(tripProfile?.excluded_filters)
     : [];
+
+  // TODO: add states to watch the changes
+  // ? Where should we do the computation? Is this something the backend can support?
+  const [tagCounts, setTagCounts] = useState(0);
+
+  useEffect(() => {
+    setTagCounts(included.length + excluded.length);
+    console.log(tagCounts);
+  });
 
   const columns = [
     {
