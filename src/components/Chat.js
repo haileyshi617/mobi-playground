@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-
+import { useState } from 'react';
+import ScrollableFeed from 'react-scrollable-feed';
 import { Card, Input, Space, Button, Tooltip, Skeleton } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 
@@ -23,20 +23,6 @@ function Chat({ chatLog, onSendChatMsg, loading }) {
   async function handleSubmit() {
     await onSendChatMsg(inputContent);
   }
-
-  //TODO: fix scroll
-  // const messagesEndRef = useRef(null);
-
-  // const scrollToBottom = () => {
-  //   messagesEndRef.current?.scrollIntoView({
-  //     behavior: 'smooth',
-  //     block: 'nearest',
-  //     inline: 'start',
-  //   });
-  // };
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [chatLog]);
 
   const exportData = () => {
     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
@@ -63,21 +49,28 @@ function Chat({ chatLog, onSendChatMsg, loading }) {
         className='chat'
       >
         <div className='chat-height-control'>
-          {chatLog.map((chatLog, idx) => {
-            return (
-              <ChatDialogue
-                key={idx}
-                role={chatLog.role}
-                content={chatLog.content}
-              />
-            );
-          })}
-          {loading && (
-            <div className='chat-dialogue assistant'>
-              <Skeleton active title={false} />
-            </div>
-          )}
-          {/* <div ref={messagesEndRef} /> */}
+          <ScrollableFeed>
+            {chatLog.map((chatLog, idx) => {
+              return (
+                <ChatDialogue
+                  key={idx}
+                  role={chatLog.role}
+                  content={chatLog.content}
+                />
+              );
+            })}
+            {loading && (
+              <div className='chat-dialogue assistant'>
+                <Skeleton
+                  active
+                  title={false}
+                  paragraph={{
+                    rows: 2,
+                  }}
+                />
+              </div>
+            )}
+          </ScrollableFeed>
         </div>
 
         <footer className='chat-footer'>
