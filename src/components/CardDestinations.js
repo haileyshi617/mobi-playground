@@ -33,7 +33,7 @@ function CardDestinations({ tripProfile }) {
     },
 
     {
-      title: 'destinations',
+      title: 'Destinations',
       key: 'destinations',
       dataIndex: 'destinations',
       render: (_, { destinations }) => (
