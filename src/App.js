@@ -26,6 +26,7 @@ function App() {
 
     try {
       setLoading(true);
+
       const res = await fetch(BASE_URL + sessionID, {
         method: 'POST',
         mode: 'cors',
