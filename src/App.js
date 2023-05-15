@@ -16,13 +16,16 @@ function App() {
 
   // Chat state
   const [chatSuccess, setChatSuccess] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // Trip profile
   const [tripProfile, setTripProfile] = useState();
 
   async function sendChatMsg(userInput) {
     setChatLog([...chatLog, { role: 'user', content: userInput }]);
+
     try {
+      setLoading(true);
       const res = await fetch(BASE_URL + sessionID, {
         method: 'POST',
         mode: 'cors',
@@ -44,8 +47,11 @@ function App() {
       // Update trip profile
       setTripProfile(data);
 
+      // Update state
+      setLoading(false);
       return data;
     } catch (err) {
+      setLoading(false);
       console.log(err);
     }
     return null;
@@ -61,7 +67,11 @@ function App() {
           <Main tripProfile={tripProfile} />
         </Col>
         <Col span={7}>
-          <Chat chatLog={chatLog} onSendChatMsg={sendChatMsg} />
+          <Chat
+            chatLog={chatLog}
+            onSendChatMsg={sendChatMsg}
+            loading={loading}
+          />
         </Col>
       </Row>
     </div>

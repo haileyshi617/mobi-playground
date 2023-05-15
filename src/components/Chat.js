@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 
-import { Card, Input, Space, Button, Tooltip } from 'antd';
+import { Card, Input, Space, Button, Tooltip, Skeleton } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 
 import ChatDialogue from './ChatDialogue';
 
 const { TextArea } = Input;
 
-function Chat({ chatLog, onSendChatMsg }) {
+function Chat({ chatLog, onSendChatMsg, loading }) {
   const [inputContent, setInputContent] = useState('');
 
   const handleInput = (e) => {
@@ -72,6 +72,11 @@ function Chat({ chatLog, onSendChatMsg }) {
               />
             );
           })}
+          {loading && (
+            <div className='chat-dialogue assistant'>
+              <Skeleton active title={false} />
+            </div>
+          )}
           {/* <div ref={messagesEndRef} /> */}
         </div>
 
