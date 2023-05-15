@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/mobi-playground/static/css/main.899b6762.css",
-    "main.js": "/mobi-playground/static/js/main.c071238a.js",
+    "main.js": "/mobi-playground/static/js/main.3e9d4983.js",
     "static/js/787.f055211e.chunk.js": "/mobi-playground/static/js/787.f055211e.chunk.js",
     "index.html": "/mobi-playground/index.html",
     "main.899b6762.css.map": "/mobi-playground/static/css/main.899b6762.css.map",
-    "main.c071238a.js.map": "/mobi-playground/static/js/main.c071238a.js.map",
+    "main.3e9d4983.js.map": "/mobi-playground/static/js/main.3e9d4983.js.map",
     "787.f055211e.chunk.js.map": "/mobi-playground/static/js/787.f055211e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.899b6762.css",
-    "static/js/main.c071238a.js"
+    "static/js/main.3e9d4983.js"
   ]
 }
