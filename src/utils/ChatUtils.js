@@ -1,6 +1,13 @@
 const BASE_URL =
   'https://proxy.takemobi.io/mobility-planner/demo/v2/dialog/response?mode=MOBI_AGENT&session_id=';
 
+const STATUS_MAP = {
+  selected_filters: 'included',
+  recommended_filters: 'recommended',
+  not_recommended_filters: 'not recommended',
+  excluded_filters: 'excluded',
+};
+
 /**
  * @summary filter out tags that are either <not supported> or <not preferences but locations>
  * <not supported>
@@ -18,4 +25,4 @@ function excludeTags(tags, excludeKeys = ['ACCOMMODATION', 'GEOLOCATION']) {
   return tags.filter((tag) => !keySet.has(tag.category));
 }
 
-export { BASE_URL, excludeTags };
+export { BASE_URL, STATUS_MAP, excludeTags };

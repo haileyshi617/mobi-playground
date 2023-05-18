@@ -1,5 +1,5 @@
 import { Card, Table, Tag } from 'antd';
-import { excludeTags } from '../utils/ChatUtils';
+import { excludeTags, STATUS_MAP } from '../utils/ChatUtils';
 
 function CardPreferences({ tripProfile }) {
   const included = tripProfile?.selected_filters
@@ -9,8 +9,31 @@ function CardPreferences({ tripProfile }) {
     ? excludeTags(tripProfile?.excluded_filters)
     : [];
 
+  const recommended = tripProfile?.recommended_filters
+    ? excludeTags(tripProfile?.recommended_filters)
+    : [];
+
+  const notRecommended = tripProfile?.not_recommended_filters
+    ? excludeTags(tripProfile?.not_recommended_filters)
+    : [];
+
   // TODO: add states to watch the changes
   // ? Where should we do the computation? Is this something the backend can support?
+
+  const getTag = (status) => {
+    switch (status) {
+      case STATUS_MAP.selected_filters:
+        return <Tag color='blue'>{STATUS_MAP.selected_filters}</Tag>;
+      case STATUS_MAP.recommended_filters:
+        return <Tag color='blue'>{STATUS_MAP.recommended_filters}</Tag>;
+      case STATUS_MAP.not_recommended_filters:
+        return <Tag color='red'>{STATUS_MAP.not_recommended_filters}</Tag>;
+      case STATUS_MAP.excluded_filters:
+        return <Tag color='red'>{STATUS_MAP.excluded_filters}</Tag>;
+      default:
+        return <Tag>{status}</Tag>;
+    }
+  };
 
   const columns = [
     {
@@ -20,17 +43,11 @@ function CardPreferences({ tripProfile }) {
     },
     {
       title: 'Status',
-      dataIndex: 'include',
-      key: 'include',
-      render: (_, { include }) => (
-        <>
-          {include ? (
-            <Tag color='blue'>Include</Tag>
-          ) : (
-            <Tag color='red'>Exclude</Tag>
-          )}
-        </>
-      ),
+      dataIndex: 'status',
+      key: 'status',
+      render: (_, { status }) => {
+        return getTag(status);
+      },
     },
     {
       title: 'Tags',
@@ -50,26 +67,49 @@ function CardPreferences({ tripProfile }) {
     {
       key: 'experience-include',
       category: 'Experience',
-      include: true,
+      status: STATUS_MAP.selected_filters,
       tags: included.filter((tag) => tag.category === 'EXPERIENCE'),
+    },
+    {
+      key: 'experience-recommended',
+      category: 'Experience',
+      status: STATUS_MAP.recommended_filters,
+      tags: recommended.filter((tag) => tag.category === 'EXPERIENCE'),
+    },
+    {
+      key: 'experience-not-recommended',
+      category: 'Experience',
+      status: STATUS_MAP.not_recommended_filters,
+      tags: notRecommended.filter((tag) => tag.category === 'EXPERIENCE'),
     },
     {
       key: 'experience-exclude',
       category: 'Experience',
-      include: false,
+      status: STATUS_MAP.excluded_filters,
       tags: excluded.filter((tag) => tag.category === 'EXPERIENCE'),
     },
     {
-      key: 'dining-include',
+      key: 'dinning-include',
       category: 'Dining',
-      include: true,
+      status: STATUS_MAP.selected_filters,
       tags: included.filter((tag) => tag.category === 'DINING'),
     },
-
     {
-      key: 'dining-exclude',
+      key: 'dinning-recommended',
       category: 'Dining',
-      include: false,
+      status: STATUS_MAP.recommended_filters,
+      tags: recommended.filter((tag) => tag.category === 'DINING'),
+    },
+    {
+      key: 'dinning-not-recommended',
+      category: 'Dining',
+      status: STATUS_MAP.not_recommended_filters,
+      tags: notRecommended.filter((tag) => tag.category === 'DINING'),
+    },
+    {
+      key: 'dinning-exclude',
+      category: 'Dining',
+      status: STATUS_MAP.excluded_filters,
       tags: excluded.filter((tag) => tag.category === 'DINING'),
     },
   ];
