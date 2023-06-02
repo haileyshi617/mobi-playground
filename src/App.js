@@ -11,8 +11,10 @@ import Chat from './components/Chat';
 import { BASE_URL } from './utils/ChatUtils';
 
 function App() {
-  const [chatLog, setChatLog] = useState([]);
   const [sessionID, setSessionID] = useState('');
+
+  const [chatLog, setChatLog] = useState([]);
+  const [rawRes, setRawRes] = useState([]);
 
   // Chat state
   const [chatSuccess, setChatSuccess] = useState(true);
@@ -44,6 +46,7 @@ function App() {
       // Update chat status and log
       setChatSuccess(data.success);
       setChatLog(data.history);
+      setRawRes(data.raw_data);
 
       // Update trip profile
       setTripProfile(data);
@@ -72,6 +75,7 @@ function App() {
             chatLog={chatLog}
             onSendChatMsg={sendChatMsg}
             loading={loading}
+            rawRes={rawRes}
           />
         </Col>
       </Row>

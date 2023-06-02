@@ -1,15 +1,20 @@
 import { useState } from 'react';
 import ScrollableFeed from 'react-scrollable-feed';
-import { Card, Input, Space, Button, Tooltip, Skeleton } from 'antd';
+import { Card, Input, Space, Button, Tooltip, Skeleton, Collapse } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 
+import { parseRawRes, formatRawRes } from '../utils/ChatUtils';
 import ChatDialogue from './ChatDialogue';
 
 const { TextArea } = Input;
+const { Panel } = Collapse;
 
-function Chat({ chatLog, onSendChatMsg, loading }) {
+function Chat({ rawRes, chatLog, onSendChatMsg, loading }) {
+  // LLM data
+  const filteredLLMRes = parseRawRes(rawRes);
+
+  // Chat input
   const [inputContent, setInputContent] = useState('');
-
   const handleInput = (e) => {
     setInputContent(e.target.value);
   };
@@ -24,6 +29,7 @@ function Chat({ chatLog, onSendChatMsg, loading }) {
     await onSendChatMsg(inputContent);
   }
 
+  // Chat export
   const exportData = () => {
     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
       JSON.stringify(chatLog)
@@ -59,6 +65,16 @@ function Chat({ chatLog, onSendChatMsg, loading }) {
                 />
               );
             })}
+            {!loading && (
+              <Collapse ghost accordion>
+                {filteredLLMRes.map((res, idx) => (
+                  <Panel header={res.name} key={idx}>
+                    {formatRawRes(res.value)}
+                  </Panel>
+                ))}
+              </Collapse>
+            )}
+
             {loading && (
               <div className='chat-dialogue assistant'>
                 <Skeleton

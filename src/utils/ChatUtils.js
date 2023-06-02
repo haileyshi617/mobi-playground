@@ -25,4 +25,68 @@ function excludeTags(tags, excludeKeys = ['ACCOMMODATION', 'GEOLOCATION']) {
   return tags.filter((tag) => !keySet.has(tag.category));
 }
 
-export { BASE_URL, STATUS_MAP, excludeTags };
+function parseRawRes(resArr) {
+  const excludeSet = new Set(['dialog_response', 'intent_response']);
+  const filteredArr = resArr.filter((data) => !excludeSet.has(data.name));
+  return filteredArr;
+}
+
+function formatRawRes(rawRes) {
+  let formattedRes = [];
+  let start = 0,
+    count = 0;
+
+  for (let i = 0; i < rawRes.length; i++) {
+    if (rawRes[i] === '{') {
+      count++;
+    } else if (rawRes[i] === '}') {
+      count--;
+      if (count === 0) {
+        try {
+          let json = rawRes.slice(start, i + 1);
+          formattedRes.push(JSON.parse(json));
+          start = i + 1;
+        } catch (error) {
+          console.error('Failed to parse the raw response: ', error);
+        }
+      }
+    }
+  }
+
+  if (start < rawRes.length) {
+    formattedRes.push({ message: rawRes.slice(start) });
+  }
+
+  return generateJSXFromData(formattedRes);
+}
+
+function generateJSXFromData(data) {
+  return data.map((item, index) => {
+    if (item.message) {
+      return <p key={index}>{item.message}</p>;
+    } else {
+      return (
+        <div key={index}>
+          {Object.keys(item).map((key) => {
+            const value = item[key];
+            let displayValue;
+            if (Array.isArray(value)) {
+              displayValue = value.length ? value.join(', ') : 'None';
+            } else if (typeof value === 'object' && value !== null) {
+              displayValue = JSON.stringify(value);
+            } else {
+              displayValue = value;
+            }
+            return (
+              <p key={key}>
+                <strong>{key.replace(/_/g, ' ')}:</strong> {displayValue}
+              </p>
+            );
+          })}
+        </div>
+      );
+    }
+  });
+}
+
+export { BASE_URL, STATUS_MAP, excludeTags, parseRawRes, formatRawRes };
