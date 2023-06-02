@@ -1,5 +1,8 @@
-import { Card, Table, Tag } from 'antd';
+import { Card, Table, Tag, Typography } from 'antd';
+import { CalculatorOutlined, UserOutlined } from '@ant-design/icons';
 import { excludeTags, STATUS_MAP } from '../utils/ChatUtils';
+
+const { Text } = Typography;
 
 function CardPreferences({ tripProfile }) {
   const included = tripProfile?.selected_filters
@@ -8,11 +11,9 @@ function CardPreferences({ tripProfile }) {
   const excluded = tripProfile?.excluded_filters
     ? excludeTags(tripProfile?.excluded_filters)
     : [];
-
   const recommended = tripProfile?.recommended_filters
     ? excludeTags(tripProfile?.recommended_filters)
     : [];
-
   const notRecommended = tripProfile?.not_recommended_filters
     ? excludeTags(tripProfile?.not_recommended_filters)
     : [];
@@ -23,15 +24,32 @@ function CardPreferences({ tripProfile }) {
   const getTag = (status) => {
     switch (status) {
       case STATUS_MAP.selected_filters:
-        return <Tag color='blue'>{STATUS_MAP.selected_filters}</Tag>;
+        return <Tag color='blue'>{STATUS_MAP.selected_filters.status}</Tag>;
       case STATUS_MAP.recommended_filters:
-        return <Tag color='blue'>{STATUS_MAP.recommended_filters}</Tag>;
+        return <Tag color='blue'>{STATUS_MAP.recommended_filters.status}</Tag>;
       case STATUS_MAP.not_recommended_filters:
-        return <Tag color='red'>{STATUS_MAP.not_recommended_filters}</Tag>;
+        return (
+          <Tag color='red'>{STATUS_MAP.not_recommended_filters.status}</Tag>
+        );
       case STATUS_MAP.excluded_filters:
-        return <Tag color='red'>{STATUS_MAP.excluded_filters}</Tag>;
+        return <Tag color='red'>{STATUS_MAP.excluded_filters.status}</Tag>;
       default:
-        return <Tag>{status}</Tag>;
+        return;
+    }
+  };
+
+  const getSrc = (status) => {
+    switch (status) {
+      case STATUS_MAP.selected_filters:
+        return <Text>{STATUS_MAP.selected_filters.src}</Text>;
+      case STATUS_MAP.recommended_filters:
+        return <Text>{STATUS_MAP.recommended_filters.src}</Text>;
+      case STATUS_MAP.not_recommended_filters:
+        return <Text>{STATUS_MAP.not_recommended_filters.src}</Text>;
+      case STATUS_MAP.excluded_filters:
+        return <Text>{STATUS_MAP.excluded_filters.src}</Text>;
+      default:
+        return;
     }
   };
 
@@ -40,6 +58,14 @@ function CardPreferences({ tripProfile }) {
       title: 'Category',
       dataIndex: 'category',
       key: 'category',
+    },
+    {
+      title: 'Source',
+      dataIndex: 'status',
+      key: 'source',
+      render: (_, { status }) => {
+        return getSrc(status);
+      },
     },
     {
       title: 'Status',

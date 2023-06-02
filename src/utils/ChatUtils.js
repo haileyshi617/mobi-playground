@@ -2,10 +2,10 @@ const BASE_URL =
   'https://proxy.takemobi.io/mobility-planner/demo/v2/dialog/response?mode=MOBI_AGENT&session_id=';
 
 const STATUS_MAP = {
-  selected_filters: 'included',
-  recommended_filters: 'recommended',
-  not_recommended_filters: 'not recommended',
-  excluded_filters: 'excluded',
+  selected_filters: { src: 'User', status: 'include' },
+  recommended_filters: { src: 'System', status: 'include' },
+  not_recommended_filters: { src: 'System', status: 'exclude' },
+  excluded_filters: { src: 'User', status: 'include' },
 };
 
 /**
