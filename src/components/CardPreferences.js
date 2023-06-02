@@ -1,5 +1,4 @@
 import { Card, Table, Tag, Typography } from 'antd';
-import { CalculatorOutlined, UserOutlined } from '@ant-design/icons';
 import { excludeTags, STATUS_MAP } from '../utils/ChatUtils';
 
 const { Text } = Typography;
